@@ -20,7 +20,7 @@ class MenuItemSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = MenuItem
-        fields = '__all__'
+        fields = ['id', 'title', 'price', 'featured', 'category']
 
 
 class CartSerializer(serializers.ModelSerializer):
@@ -32,24 +32,25 @@ class CartSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-# Cos jest nie tak 
+class OrderSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    delivery_crew = UserSerializer()
+
+    class Meta:
+        model = Order
+        fields = '__all__'
+
 
 class OrderItemSerializer(serializers.ModelSerializer):
     menuitem = MenuItemSerializer()
+    order = UserSerializer()
 
     class Meta:
         model = OrderItem
         fields = '__all__'
 
 
-class OrderSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-    delivery_crew = UserSerializer()
-    order_items = OrderItemSerializer(many=True)
 
-    class Meta:
-        model = Order
-        fields = '__all__'
 
 
 
